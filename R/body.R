@@ -9,7 +9,7 @@
 #' msg <- envelope()
 #' body(msg, "Hello!")
 #' body(msg, "<b>Hello!</b>", "html")
-body <- function(msg, content = NULL, type = c("plain", "html")){
+body <- function(msg, content = NULL, type = c("plain", "html"), charset = "utf-8"){
   type = type[1]
 
   if (is.null(content)) {
@@ -18,9 +18,9 @@ body <- function(msg, content = NULL, type = c("plain", "html")){
     type <- paste("text", type, sep = "/")
 
     if (type == "text/plain") {
-      body <- mime(type, "quoted-printable", "flowed", "utf-8")
+      body <- mime(type, "quoted-printable", "flowed", charset)
     } else {
-      body <- mime(type, "quoted-printable", NULL, "utf-8")
+      body <- mime(type, "quoted-printable", NULL, charset)
     }
     body$body <- content
 
